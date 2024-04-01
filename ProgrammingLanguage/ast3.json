@@ -1,0 +1,2651 @@
+{
+    "type": "CompilationUnit",
+    "package": {
+        "type": "PackageDeclaration",
+        "modifiers": null,
+        "annotations": null,
+        "documentation": null,
+        "name": "org.jabref.logic.texparser"
+    },
+    "imports": [
+        {
+            "type": "Import",
+            "path": "org.jabref.model.texparser.LatexParserResult",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "org.slf4j.Logger",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "org.slf4j.LoggerFactory",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.io",
+            "static": false,
+            "wildcard": true
+        },
+        {
+            "type": "Import",
+            "path": "java.nio.channels.ClosedChannelException",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.nio.charset.StandardCharsets",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.nio.file.Files",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.nio.file.Path",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.util.ArrayList",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.util.Collections",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.util.List",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.util.regex.Matcher",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.util.regex.Pattern",
+            "static": false,
+            "wildcard": false
+        }
+    ],
+    "types": [
+        {
+            "type": "ClassDeclaration",
+            "modifiers": [
+                "public"
+            ],
+            "annotations": [],
+            "documentation": null,
+            "name": "DefaultLatexParser",
+            "body": [
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "Logger",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "LOGGER",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "LoggerFactory",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "DefaultLatexParser",
+                                            "dimensions": null,
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "",
+                                        "selectors": []
+                                    }
+                                ],
+                                "member": "getLogger"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "String",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "TEX_EXT",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "Literal",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": null,
+                                "selectors": [],
+                                "value": "\".tex\""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "String",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "BIB_EXT",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "Literal",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": null,
+                                "selectors": [],
+                                "value": "\".bib\""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "String",
+                        "dimensions": [
+                            null
+                        ],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": "/**\n     * It is allowed to add new cite commands for pattern matching. Some valid examples: \"citep\", \"[cC]ite\", and\n     * \"[cC]ite(author|title|year|t|p)?\".\n     */",
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "CITE_COMMANDS",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "ArrayInitializer",
+                                "initializers": [
+                                    {
+                                        "type": "Literal",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "value": "\"[cC]ite(alt|alp|author|authorfull|date|num|p|t|text|title|url|year|yearpar)?\""
+                                    },
+                                    {
+                                        "type": "Literal",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "value": "\"([aA]|fnote|foot|footfull|full|no|[nN]ote|[pP]aren|[pP]note|[tT]ext|[sS]mart|super)cite\""
+                                    },
+                                    {
+                                        "type": "Literal",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "value": "\"footcitetext\""
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "String",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "CITE_GROUP",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "Literal",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": null,
+                                "selectors": [],
+                                "value": "\"key\""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "Pattern",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "CITE_PATTERN",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "Pattern",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "String",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "\"\\\\\\\\(%s)\\\\*?(?:\\\\[(?:[^\\\\]]*)\\\\]){0,2}\\\\{(?<%s>[^\\\\}]*)\\\\}(?:\\\\{[^\\\\}]*\\\\})?\""
+                                            },
+                                            {
+                                                "type": "MethodInvocation",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "String",
+                                                "selectors": [],
+                                                "type_arguments": null,
+                                                "arguments": [
+                                                    {
+                                                        "type": "Literal",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": null,
+                                                        "selectors": [],
+                                                        "value": "\"|\""
+                                                    },
+                                                    {
+                                                        "type": "MemberReference",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "",
+                                                        "selectors": [],
+                                                        "member": "CITE_COMMANDS"
+                                                    }
+                                                ],
+                                                "member": "join"
+                                            },
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "CITE_GROUP"
+                                            }
+                                        ],
+                                        "member": "format"
+                                    }
+                                ],
+                                "member": "compile"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "String",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "BIBLIOGRAPHY_GROUP",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "Literal",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": null,
+                                "selectors": [],
+                                "value": "\"bib\""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "Pattern",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "BIBLIOGRAPHY_PATTERN",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "Pattern",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "String",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "\"\\\\\\\\(?:bibliography|addbibresource)\\\\{(?<%s>[^\\\\}]*)\\\\}\""
+                                            },
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "BIBLIOGRAPHY_GROUP"
+                                            }
+                                        ],
+                                        "member": "format"
+                                    }
+                                ],
+                                "member": "compile"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "String",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "INCLUDE_GROUP",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "Literal",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": null,
+                                "selectors": [],
+                                "value": "\"file\""
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "Pattern",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "static",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "INCLUDE_PATTERN",
+                            "dimensions": [],
+                            "initializer": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "Pattern",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "String",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "\"\\\\\\\\(?:include|input)\\\\{(?<%s>[^\\\\}]*)\\\\}\""
+                                            },
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "INCLUDE_GROUP"
+                                            }
+                                        ],
+                                        "member": "format"
+                                    }
+                                ],
+                                "member": "compile"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": {
+                        "type": "ReferenceType",
+                        "name": "LatexParserResult",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "documentation": null,
+                    "modifiers": [
+                        "final",
+                        "private"
+                    ],
+                    "annotations": [],
+                    "declarators": [
+                        {
+                            "type": "VariableDeclarator",
+                            "name": "latexParserResult",
+                            "dimensions": [],
+                            "initializer": null
+                        }
+                    ]
+                },
+                {
+                    "type": "ConstructorDeclaration",
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [],
+                    "documentation": null,
+                    "type_parameters": null,
+                    "name": "DefaultLatexParser",
+                    "parameters": [],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "StatementExpression",
+                            "label": null,
+                            "expression": {
+                                "type": "=",
+                                "expressionl": {
+                                    "type": "This",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": null,
+                                    "selectors": [
+                                        {
+                                            "type": "MemberReference",
+                                            "prefix_operators": null,
+                                            "postfix_operators": null,
+                                            "qualifier": null,
+                                            "selectors": null,
+                                            "member": "latexParserResult"
+                                        }
+                                    ]
+                                },
+                                "value": {
+                                    "type": {
+                                        "type": "ReferenceType",
+                                        "name": "LatexParserResult",
+                                        "dimensions": null,
+                                        "arguments": null,
+                                        "sub_type": null
+                                    },
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": null,
+                                    "selectors": [],
+                                    "constructor_type_arguments": null,
+                                    "arguments": [],
+                                    "body": null
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "ReferenceType",
+                        "name": "LatexParserResult",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "name": "getLatexParserResult",
+                    "parameters": [],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "MemberReference",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "",
+                                "selectors": [],
+                                "member": "latexParserResult"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [
+                        {
+                            "type": "Annotation",
+                            "name": "Override",
+                            "element": null
+                        }
+                    ],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "ReferenceType",
+                        "name": "LatexParserResult",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "name": "parse",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "citeString",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "StatementExpression",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "Path",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "\"\""
+                                            }
+                                        ],
+                                        "member": "of"
+                                    },
+                                    {
+                                        "type": "Literal",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "value": "1"
+                                    },
+                                    {
+                                        "type": "MemberReference",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "",
+                                        "selectors": [],
+                                        "member": "citeString"
+                                    }
+                                ],
+                                "member": "matchCitation"
+                            }
+                        },
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "MemberReference",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "",
+                                "selectors": [],
+                                "member": "latexParserResult"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [
+                        {
+                            "type": "Annotation",
+                            "name": "Override",
+                            "element": null
+                        }
+                    ],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "ReferenceType",
+                        "name": "LatexParserResult",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "name": "parse",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Path",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "latexFile",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "Collections",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "latexFile"
+                                            }
+                                        ],
+                                        "member": "singletonList"
+                                    }
+                                ],
+                                "member": "parse"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [
+                        {
+                            "type": "Annotation",
+                            "name": "Override",
+                            "element": null
+                        }
+                    ],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "ReferenceType",
+                        "name": "LatexParserResult",
+                        "dimensions": [],
+                        "arguments": null,
+                        "sub_type": null
+                    },
+                    "name": "parse",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "List",
+                                "dimensions": [],
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Path",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "pattern_type": null
+                                    }
+                                ],
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "latexFiles",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "StatementExpression",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "latexParserResult",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "MemberReference",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "",
+                                        "selectors": [],
+                                        "member": "latexFiles"
+                                    }
+                                ],
+                                "member": "addFiles"
+                            }
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "List",
+                                "dimensions": [],
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Path",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "pattern_type": null
+                                    }
+                                ],
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "referencedFiles",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "ArrayList",
+                                            "dimensions": null,
+                                            "arguments": [],
+                                            "sub_type": null
+                                        },
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "constructor_type_arguments": null,
+                                        "arguments": [],
+                                        "body": null
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "ForStatement",
+                            "label": null,
+                            "control": {
+                                "type": "EnhancedForControl",
+                                "var": {
+                                    "type": {
+                                        "type": "ReferenceType",
+                                        "name": "Path",
+                                        "dimensions": [],
+                                        "arguments": null,
+                                        "sub_type": null
+                                    },
+                                    "modifiers": [],
+                                    "annotations": [],
+                                    "declarators": [
+                                        {
+                                            "type": "VariableDeclarator",
+                                            "name": "file",
+                                            "dimensions": null,
+                                            "initializer": null
+                                        }
+                                    ]
+                                },
+                                "iterable": {
+                                    "type": "MemberReference",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": "",
+                                    "selectors": [],
+                                    "member": "latexFiles"
+                                }
+                            },
+                            "body": {
+                                "type": "BlockStatement",
+                                "label": null,
+                                "statements": [
+                                    {
+                                        "type": "IfStatement",
+                                        "label": null,
+                                        "condition": {
+                                            "type": "MethodInvocation",
+                                            "prefix_operators": [
+                                                "!"
+                                            ],
+                                            "postfix_operators": [],
+                                            "qualifier": "file",
+                                            "selectors": [
+                                                {
+                                                    "type": "MethodInvocation",
+                                                    "prefix_operators": null,
+                                                    "postfix_operators": null,
+                                                    "qualifier": null,
+                                                    "selectors": null,
+                                                    "type_arguments": null,
+                                                    "arguments": [],
+                                                    "member": "exists"
+                                                }
+                                            ],
+                                            "type_arguments": null,
+                                            "arguments": [],
+                                            "member": "toFile"
+                                        },
+                                        "then_statement": {
+                                            "type": "BlockStatement",
+                                            "label": null,
+                                            "statements": [
+                                                {
+                                                    "type": "StatementExpression",
+                                                    "label": null,
+                                                    "expression": {
+                                                        "type": "MethodInvocation",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "LOGGER",
+                                                        "selectors": [],
+                                                        "type_arguments": null,
+                                                        "arguments": [
+                                                            {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "String",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [
+                                                                    {
+                                                                        "type": "Literal",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": null,
+                                                                        "selectors": [],
+                                                                        "value": "\"File does not exist: %s\""
+                                                                    },
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "file"
+                                                                    }
+                                                                ],
+                                                                "member": "format"
+                                                            }
+                                                        ],
+                                                        "member": "error"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "ContinueStatement",
+                                                    "label": null,
+                                                    "goto": null
+                                                }
+                                            ]
+                                        },
+                                        "else_statement": null
+                                    },
+                                    {
+                                        "type": "TryStatement",
+                                        "label": null,
+                                        "resources": [
+                                            {
+                                                "type": {
+                                                    "type": "ReferenceType",
+                                                    "name": "InputStream",
+                                                    "dimensions": [],
+                                                    "arguments": null,
+                                                    "sub_type": null
+                                                },
+                                                "modifiers": [],
+                                                "annotations": [],
+                                                "name": "inputStream",
+                                                "value": {
+                                                    "type": "MethodInvocation",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "Files",
+                                                    "selectors": [],
+                                                    "type_arguments": null,
+                                                    "arguments": [
+                                                        {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [],
+                                                            "member": "file"
+                                                        }
+                                                    ],
+                                                    "member": "newInputStream"
+                                                }
+                                            },
+                                            {
+                                                "type": {
+                                                    "type": "ReferenceType",
+                                                    "name": "Reader",
+                                                    "dimensions": [],
+                                                    "arguments": null,
+                                                    "sub_type": null
+                                                },
+                                                "modifiers": [],
+                                                "annotations": [],
+                                                "name": "reader",
+                                                "value": {
+                                                    "type": {
+                                                        "type": "ReferenceType",
+                                                        "name": "InputStreamReader",
+                                                        "dimensions": null,
+                                                        "arguments": null,
+                                                        "sub_type": null
+                                                    },
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": null,
+                                                    "selectors": [],
+                                                    "constructor_type_arguments": null,
+                                                    "arguments": [
+                                                        {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [],
+                                                            "member": "inputStream"
+                                                        },
+                                                        {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "StandardCharsets",
+                                                            "selectors": [],
+                                                            "member": "UTF_8"
+                                                        }
+                                                    ],
+                                                    "body": null
+                                                }
+                                            },
+                                            {
+                                                "type": {
+                                                    "type": "ReferenceType",
+                                                    "name": "LineNumberReader",
+                                                    "dimensions": [],
+                                                    "arguments": null,
+                                                    "sub_type": null
+                                                },
+                                                "modifiers": [],
+                                                "annotations": [],
+                                                "name": "lineNumberReader",
+                                                "value": {
+                                                    "type": {
+                                                        "type": "ReferenceType",
+                                                        "name": "LineNumberReader",
+                                                        "dimensions": null,
+                                                        "arguments": null,
+                                                        "sub_type": null
+                                                    },
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": null,
+                                                    "selectors": [],
+                                                    "constructor_type_arguments": null,
+                                                    "arguments": [
+                                                        {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [],
+                                                            "member": "reader"
+                                                        }
+                                                    ],
+                                                    "body": null
+                                                }
+                                            }
+                                        ],
+                                        "block": [
+                                            {
+                                                "type": "ForStatement",
+                                                "label": null,
+                                                "control": {
+                                                    "type": "ForControl",
+                                                    "init": {
+                                                        "type": {
+                                                            "type": "ReferenceType",
+                                                            "name": "String",
+                                                            "dimensions": [],
+                                                            "arguments": null,
+                                                            "sub_type": null
+                                                        },
+                                                        "modifiers": [],
+                                                        "annotations": [],
+                                                        "declarators": [
+                                                            {
+                                                                "type": "VariableDeclarator",
+                                                                "name": "line",
+                                                                "dimensions": null,
+                                                                "initializer": {
+                                                                    "type": "MethodInvocation",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": "lineNumberReader",
+                                                                    "selectors": [],
+                                                                    "type_arguments": null,
+                                                                    "arguments": [],
+                                                                    "member": "readLine"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "condition": {
+                                                        "type": "BinaryOperation",
+                                                        "operator": "!=",
+                                                        "operandl": {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [],
+                                                            "member": "line"
+                                                        },
+                                                        "operandr": {
+                                                            "type": "Literal",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": null,
+                                                            "selectors": [],
+                                                            "value": "null"
+                                                        }
+                                                    },
+                                                    "update": [
+                                                        {
+                                                            "type": "=",
+                                                            "expressionl": {
+                                                                "type": "MemberReference",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "member": "line"
+                                                            },
+                                                            "value": {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "lineNumberReader",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [],
+                                                                "member": "readLine"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                "body": {
+                                                    "type": "BlockStatement",
+                                                    "label": null,
+                                                    "statements": [
+                                                        {
+                                                            "type": "IfStatement",
+                                                            "label": null,
+                                                            "condition": {
+                                                                "type": "BinaryOperation",
+                                                                "operator": "||",
+                                                                "operandl": {
+                                                                    "type": "MethodInvocation",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": "line",
+                                                                    "selectors": [
+                                                                        {
+                                                                            "type": "MethodInvocation",
+                                                                            "prefix_operators": null,
+                                                                            "postfix_operators": null,
+                                                                            "qualifier": null,
+                                                                            "selectors": null,
+                                                                            "type_arguments": null,
+                                                                            "arguments": [],
+                                                                            "member": "isEmpty"
+                                                                        }
+                                                                    ],
+                                                                    "type_arguments": null,
+                                                                    "arguments": [],
+                                                                    "member": "trim"
+                                                                },
+                                                                "operandr": {
+                                                                    "type": "BinaryOperation",
+                                                                    "operator": "==",
+                                                                    "operandl": {
+                                                                        "type": "MethodInvocation",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "line",
+                                                                        "selectors": [
+                                                                            {
+                                                                                "type": "MethodInvocation",
+                                                                                "prefix_operators": null,
+                                                                                "postfix_operators": null,
+                                                                                "qualifier": null,
+                                                                                "selectors": null,
+                                                                                "type_arguments": null,
+                                                                                "arguments": [
+                                                                                    {
+                                                                                        "type": "Literal",
+                                                                                        "prefix_operators": [],
+                                                                                        "postfix_operators": [],
+                                                                                        "qualifier": null,
+                                                                                        "selectors": [],
+                                                                                        "value": "0"
+                                                                                    }
+                                                                                ],
+                                                                                "member": "charAt"
+                                                                            }
+                                                                        ],
+                                                                        "type_arguments": null,
+                                                                        "arguments": [],
+                                                                        "member": "trim"
+                                                                    },
+                                                                    "operandr": {
+                                                                        "type": "Literal",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": null,
+                                                                        "selectors": [],
+                                                                        "value": "'%'"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "then_statement": {
+                                                                "type": "BlockStatement",
+                                                                "label": null,
+                                                                "statements": [
+                                                                    {
+                                                                        "type": "ContinueStatement",
+                                                                        "label": null,
+                                                                        "goto": null
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "else_statement": null
+                                                        },
+                                                        {
+                                                            "type": "StatementExpression",
+                                                            "label": null,
+                                                            "expression": {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "file"
+                                                                    },
+                                                                    {
+                                                                        "type": "MethodInvocation",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "lineNumberReader",
+                                                                        "selectors": [],
+                                                                        "type_arguments": null,
+                                                                        "arguments": [],
+                                                                        "member": "getLineNumber"
+                                                                    },
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "line"
+                                                                    }
+                                                                ],
+                                                                "member": "matchCitation"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "StatementExpression",
+                                                            "label": null,
+                                                            "expression": {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "file"
+                                                                    },
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "line"
+                                                                    }
+                                                                ],
+                                                                "member": "matchBibFile"
+                                                            }
+                                                        },
+                                                        {
+                                                            "type": "StatementExpression",
+                                                            "label": null,
+                                                            "expression": {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "file"
+                                                                    },
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "latexFiles"
+                                                                    },
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "referencedFiles"
+                                                                    },
+                                                                    {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "line"
+                                                                    }
+                                                                ],
+                                                                "member": "matchNestedFile"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ],
+                                        "catches": [
+                                            {
+                                                "type": "CatchClause",
+                                                "label": null,
+                                                "parameter": {
+                                                    "type": "CatchClauseParameter",
+                                                    "modifiers": null,
+                                                    "annotations": null,
+                                                    "types": [
+                                                        "ClosedChannelException"
+                                                    ],
+                                                    "name": "e"
+                                                },
+                                                "block": [
+                                                    {
+                                                        "type": "StatementExpression",
+                                                        "label": null,
+                                                        "expression": {
+                                                            "type": "MethodInvocation",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "LOGGER",
+                                                            "selectors": [],
+                                                            "type_arguments": null,
+                                                            "arguments": [
+                                                                {
+                                                                    "type": "Literal",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": null,
+                                                                    "selectors": [],
+                                                                    "value": "\"Parsing has been interrupted\""
+                                                                }
+                                                            ],
+                                                            "member": "info"
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "CatchClause",
+                                                "label": null,
+                                                "parameter": {
+                                                    "type": "CatchClauseParameter",
+                                                    "modifiers": null,
+                                                    "annotations": null,
+                                                    "types": [
+                                                        "IOException",
+                                                        "UncheckedIOException"
+                                                    ],
+                                                    "name": "e"
+                                                },
+                                                "block": [
+                                                    {
+                                                        "type": "StatementExpression",
+                                                        "label": null,
+                                                        "expression": {
+                                                            "type": "MethodInvocation",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "LOGGER",
+                                                            "selectors": [],
+                                                            "type_arguments": null,
+                                                            "arguments": [
+                                                                {
+                                                                    "type": "Literal",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": null,
+                                                                    "selectors": [],
+                                                                    "value": "\"Error while parsing file {}\""
+                                                                },
+                                                                {
+                                                                    "type": "MemberReference",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": "",
+                                                                    "selectors": [],
+                                                                    "member": "file"
+                                                                },
+                                                                {
+                                                                    "type": "MemberReference",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": "",
+                                                                    "selectors": [],
+                                                                    "member": "e"
+                                                                }
+                                                            ],
+                                                            "member": "info"
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "finally_block": null
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "IfStatement",
+                            "label": null,
+                            "condition": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [
+                                    "!"
+                                ],
+                                "postfix_operators": [],
+                                "qualifier": "referencedFiles",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [],
+                                "member": "isEmpty"
+                            },
+                            "then_statement": {
+                                "type": "BlockStatement",
+                                "label": null,
+                                "statements": [
+                                    {
+                                        "type": "StatementExpression",
+                                        "label": null,
+                                        "expression": {
+                                            "type": "MethodInvocation",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "",
+                                            "selectors": [],
+                                            "type_arguments": null,
+                                            "arguments": [
+                                                {
+                                                    "type": "MemberReference",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "",
+                                                    "selectors": [],
+                                                    "member": "referencedFiles"
+                                                }
+                                            ],
+                                            "member": "parse"
+                                        }
+                                    }
+                                ]
+                            },
+                            "else_statement": null
+                        },
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "MemberReference",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "",
+                                "selectors": [],
+                                "member": "latexParserResult"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": "/**\n     * Find cites along a specific line and store them.\n     */",
+                    "modifiers": [
+                        "private"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": null,
+                    "name": "matchCitation",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Path",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "file",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "lineNumber",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "line",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Matcher",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "citeMatch",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "CITE_PATTERN",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "line"
+                                            }
+                                        ],
+                                        "member": "matcher"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "WhileStatement",
+                            "label": null,
+                            "condition": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "citeMatch",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [],
+                                "member": "find"
+                            },
+                            "body": {
+                                "type": "BlockStatement",
+                                "label": null,
+                                "statements": [
+                                    {
+                                        "type": "ForStatement",
+                                        "label": null,
+                                        "control": {
+                                            "type": "EnhancedForControl",
+                                            "var": {
+                                                "type": {
+                                                    "type": "ReferenceType",
+                                                    "name": "String",
+                                                    "dimensions": [],
+                                                    "arguments": null,
+                                                    "sub_type": null
+                                                },
+                                                "modifiers": [],
+                                                "annotations": [],
+                                                "declarators": [
+                                                    {
+                                                        "type": "VariableDeclarator",
+                                                        "name": "key",
+                                                        "dimensions": null,
+                                                        "initializer": null
+                                                    }
+                                                ]
+                                            },
+                                            "iterable": {
+                                                "type": "MethodInvocation",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "citeMatch",
+                                                "selectors": [
+                                                    {
+                                                        "type": "MethodInvocation",
+                                                        "prefix_operators": null,
+                                                        "postfix_operators": null,
+                                                        "qualifier": null,
+                                                        "selectors": null,
+                                                        "type_arguments": null,
+                                                        "arguments": [
+                                                            {
+                                                                "type": "Literal",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": null,
+                                                                "selectors": [],
+                                                                "value": "\",\""
+                                                            }
+                                                        ],
+                                                        "member": "split"
+                                                    }
+                                                ],
+                                                "type_arguments": null,
+                                                "arguments": [
+                                                    {
+                                                        "type": "MemberReference",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "",
+                                                        "selectors": [],
+                                                        "member": "CITE_GROUP"
+                                                    }
+                                                ],
+                                                "member": "group"
+                                            }
+                                        },
+                                        "body": {
+                                            "type": "BlockStatement",
+                                            "label": null,
+                                            "statements": [
+                                                {
+                                                    "type": "StatementExpression",
+                                                    "label": null,
+                                                    "expression": {
+                                                        "type": "MethodInvocation",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "latexParserResult",
+                                                        "selectors": [],
+                                                        "type_arguments": null,
+                                                        "arguments": [
+                                                            {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "key",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [],
+                                                                "member": "trim"
+                                                            },
+                                                            {
+                                                                "type": "MemberReference",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "member": "file"
+                                                            },
+                                                            {
+                                                                "type": "MemberReference",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "member": "lineNumber"
+                                                            },
+                                                            {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "citeMatch",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [],
+                                                                "member": "start"
+                                                            },
+                                                            {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "citeMatch",
+                                                                "selectors": [],
+                                                                "type_arguments": null,
+                                                                "arguments": [],
+                                                                "member": "end"
+                                                            },
+                                                            {
+                                                                "type": "MemberReference",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "member": "line"
+                                                            }
+                                                        ],
+                                                        "member": "addKey"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": "/**\n     * Find BIB files along a specific line and store them.\n     */",
+                    "modifiers": [
+                        "private"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": null,
+                    "name": "matchBibFile",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Path",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "file",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "line",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Matcher",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "bibliographyMatch",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "BIBLIOGRAPHY_PATTERN",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "line"
+                                            }
+                                        ],
+                                        "member": "matcher"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "WhileStatement",
+                            "label": null,
+                            "condition": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "bibliographyMatch",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [],
+                                "member": "find"
+                            },
+                            "body": {
+                                "type": "BlockStatement",
+                                "label": null,
+                                "statements": [
+                                    {
+                                        "type": "ForStatement",
+                                        "label": null,
+                                        "control": {
+                                            "type": "EnhancedForControl",
+                                            "var": {
+                                                "type": {
+                                                    "type": "ReferenceType",
+                                                    "name": "String",
+                                                    "dimensions": [],
+                                                    "arguments": null,
+                                                    "sub_type": null
+                                                },
+                                                "modifiers": [],
+                                                "annotations": [],
+                                                "declarators": [
+                                                    {
+                                                        "type": "VariableDeclarator",
+                                                        "name": "bibString",
+                                                        "dimensions": null,
+                                                        "initializer": null
+                                                    }
+                                                ]
+                                            },
+                                            "iterable": {
+                                                "type": "MethodInvocation",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "bibliographyMatch",
+                                                "selectors": [
+                                                    {
+                                                        "type": "MethodInvocation",
+                                                        "prefix_operators": null,
+                                                        "postfix_operators": null,
+                                                        "qualifier": null,
+                                                        "selectors": null,
+                                                        "type_arguments": null,
+                                                        "arguments": [
+                                                            {
+                                                                "type": "Literal",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": null,
+                                                                "selectors": [],
+                                                                "value": "\",\""
+                                                            }
+                                                        ],
+                                                        "member": "split"
+                                                    }
+                                                ],
+                                                "type_arguments": null,
+                                                "arguments": [
+                                                    {
+                                                        "type": "MemberReference",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "",
+                                                        "selectors": [],
+                                                        "member": "BIBLIOGRAPHY_GROUP"
+                                                    }
+                                                ],
+                                                "member": "group"
+                                            }
+                                        },
+                                        "body": {
+                                            "type": "BlockStatement",
+                                            "label": null,
+                                            "statements": [
+                                                {
+                                                    "type": "StatementExpression",
+                                                    "label": null,
+                                                    "expression": {
+                                                        "type": "=",
+                                                        "expressionl": {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [],
+                                                            "member": "bibString"
+                                                        },
+                                                        "value": {
+                                                            "type": "MethodInvocation",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "bibString",
+                                                            "selectors": [],
+                                                            "type_arguments": null,
+                                                            "arguments": [],
+                                                            "member": "trim"
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "type": {
+                                                        "type": "ReferenceType",
+                                                        "name": "Path",
+                                                        "dimensions": [],
+                                                        "arguments": null,
+                                                        "sub_type": null
+                                                    },
+                                                    "modifiers": [],
+                                                    "annotations": [],
+                                                    "declarators": [
+                                                        {
+                                                            "type": "VariableDeclarator",
+                                                            "name": "bibFile",
+                                                            "dimensions": [],
+                                                            "initializer": {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "file",
+                                                                "selectors": [
+                                                                    {
+                                                                        "type": "MethodInvocation",
+                                                                        "prefix_operators": null,
+                                                                        "postfix_operators": null,
+                                                                        "qualifier": null,
+                                                                        "selectors": null,
+                                                                        "type_arguments": null,
+                                                                        "arguments": [
+                                                                            {
+                                                                                "type": "TernaryExpression",
+                                                                                "condition": {
+                                                                                    "type": "MethodInvocation",
+                                                                                    "prefix_operators": [],
+                                                                                    "postfix_operators": [],
+                                                                                    "qualifier": "bibString",
+                                                                                    "selectors": [],
+                                                                                    "type_arguments": null,
+                                                                                    "arguments": [
+                                                                                        {
+                                                                                            "type": "MemberReference",
+                                                                                            "prefix_operators": [],
+                                                                                            "postfix_operators": [],
+                                                                                            "qualifier": "",
+                                                                                            "selectors": [],
+                                                                                            "member": "BIB_EXT"
+                                                                                        }
+                                                                                    ],
+                                                                                    "member": "endsWith"
+                                                                                },
+                                                                                "if_true": {
+                                                                                    "type": "MemberReference",
+                                                                                    "prefix_operators": [],
+                                                                                    "postfix_operators": [],
+                                                                                    "qualifier": "",
+                                                                                    "selectors": [],
+                                                                                    "member": "bibString"
+                                                                                },
+                                                                                "if_false": {
+                                                                                    "type": "MethodInvocation",
+                                                                                    "prefix_operators": [],
+                                                                                    "postfix_operators": [],
+                                                                                    "qualifier": "String",
+                                                                                    "selectors": [],
+                                                                                    "type_arguments": null,
+                                                                                    "arguments": [
+                                                                                        {
+                                                                                            "type": "Literal",
+                                                                                            "prefix_operators": [],
+                                                                                            "postfix_operators": [],
+                                                                                            "qualifier": null,
+                                                                                            "selectors": [],
+                                                                                            "value": "\"%s%s\""
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "MemberReference",
+                                                                                            "prefix_operators": [],
+                                                                                            "postfix_operators": [],
+                                                                                            "qualifier": "",
+                                                                                            "selectors": [],
+                                                                                            "member": "bibString"
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "MemberReference",
+                                                                                            "prefix_operators": [],
+                                                                                            "postfix_operators": [],
+                                                                                            "qualifier": "",
+                                                                                            "selectors": [],
+                                                                                            "member": "BIB_EXT"
+                                                                                        }
+                                                                                    ],
+                                                                                    "member": "format"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "member": "resolve"
+                                                                    }
+                                                                ],
+                                                                "type_arguments": null,
+                                                                "arguments": [],
+                                                                "member": "getParent"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "IfStatement",
+                                                    "label": null,
+                                                    "condition": {
+                                                        "type": "MethodInvocation",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "bibFile",
+                                                        "selectors": [
+                                                            {
+                                                                "type": "MethodInvocation",
+                                                                "prefix_operators": null,
+                                                                "postfix_operators": null,
+                                                                "qualifier": null,
+                                                                "selectors": null,
+                                                                "type_arguments": null,
+                                                                "arguments": [],
+                                                                "member": "exists"
+                                                            }
+                                                        ],
+                                                        "type_arguments": null,
+                                                        "arguments": [],
+                                                        "member": "toFile"
+                                                    },
+                                                    "then_statement": {
+                                                        "type": "BlockStatement",
+                                                        "label": null,
+                                                        "statements": [
+                                                            {
+                                                                "type": "StatementExpression",
+                                                                "label": null,
+                                                                "expression": {
+                                                                    "type": "MethodInvocation",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": "latexParserResult",
+                                                                    "selectors": [],
+                                                                    "type_arguments": null,
+                                                                    "arguments": [
+                                                                        {
+                                                                            "type": "MemberReference",
+                                                                            "prefix_operators": [],
+                                                                            "postfix_operators": [],
+                                                                            "qualifier": "",
+                                                                            "selectors": [],
+                                                                            "member": "file"
+                                                                        },
+                                                                        {
+                                                                            "type": "MemberReference",
+                                                                            "prefix_operators": [],
+                                                                            "postfix_operators": [],
+                                                                            "qualifier": "",
+                                                                            "selectors": [],
+                                                                            "member": "bibFile"
+                                                                        }
+                                                                    ],
+                                                                    "member": "addBibFile"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    "else_statement": null
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": "/**\n     * Find inputs and includes along a specific line and store them for parsing later.\n     */",
+                    "modifiers": [
+                        "private"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": null,
+                    "name": "matchNestedFile",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Path",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "file",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "List",
+                                "dimensions": [],
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Path",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "pattern_type": null
+                                    }
+                                ],
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "texFiles",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "List",
+                                "dimensions": [],
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Path",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "pattern_type": null
+                                    }
+                                ],
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "referencedFiles",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "line",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Matcher",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "includeMatch",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "INCLUDE_PATTERN",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "line"
+                                            }
+                                        ],
+                                        "member": "matcher"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "WhileStatement",
+                            "label": null,
+                            "condition": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "includeMatch",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [],
+                                "member": "find"
+                            },
+                            "body": {
+                                "type": "BlockStatement",
+                                "label": null,
+                                "statements": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "String",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "modifiers": [],
+                                        "annotations": [],
+                                        "declarators": [
+                                            {
+                                                "type": "VariableDeclarator",
+                                                "name": "include",
+                                                "dimensions": [],
+                                                "initializer": {
+                                                    "type": "MethodInvocation",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "includeMatch",
+                                                    "selectors": [],
+                                                    "type_arguments": null,
+                                                    "arguments": [
+                                                        {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [],
+                                                            "member": "INCLUDE_GROUP"
+                                                        }
+                                                    ],
+                                                    "member": "group"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Path",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "modifiers": [],
+                                        "annotations": [],
+                                        "declarators": [
+                                            {
+                                                "type": "VariableDeclarator",
+                                                "name": "nestedFile",
+                                                "dimensions": [],
+                                                "initializer": {
+                                                    "type": "MethodInvocation",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "file",
+                                                    "selectors": [
+                                                        {
+                                                            "type": "MethodInvocation",
+                                                            "prefix_operators": null,
+                                                            "postfix_operators": null,
+                                                            "qualifier": null,
+                                                            "selectors": null,
+                                                            "type_arguments": null,
+                                                            "arguments": [
+                                                                {
+                                                                    "type": "TernaryExpression",
+                                                                    "condition": {
+                                                                        "type": "MethodInvocation",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "include",
+                                                                        "selectors": [],
+                                                                        "type_arguments": null,
+                                                                        "arguments": [
+                                                                            {
+                                                                                "type": "MemberReference",
+                                                                                "prefix_operators": [],
+                                                                                "postfix_operators": [],
+                                                                                "qualifier": "",
+                                                                                "selectors": [],
+                                                                                "member": "TEX_EXT"
+                                                                            }
+                                                                        ],
+                                                                        "member": "endsWith"
+                                                                    },
+                                                                    "if_true": {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "include"
+                                                                    },
+                                                                    "if_false": {
+                                                                        "type": "MethodInvocation",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "String",
+                                                                        "selectors": [],
+                                                                        "type_arguments": null,
+                                                                        "arguments": [
+                                                                            {
+                                                                                "type": "Literal",
+                                                                                "prefix_operators": [],
+                                                                                "postfix_operators": [],
+                                                                                "qualifier": null,
+                                                                                "selectors": [],
+                                                                                "value": "\"%s%s\""
+                                                                            },
+                                                                            {
+                                                                                "type": "MemberReference",
+                                                                                "prefix_operators": [],
+                                                                                "postfix_operators": [],
+                                                                                "qualifier": "",
+                                                                                "selectors": [],
+                                                                                "member": "include"
+                                                                            },
+                                                                            {
+                                                                                "type": "MemberReference",
+                                                                                "prefix_operators": [],
+                                                                                "postfix_operators": [],
+                                                                                "qualifier": "",
+                                                                                "selectors": [],
+                                                                                "member": "TEX_EXT"
+                                                                            }
+                                                                        ],
+                                                                        "member": "format"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "member": "resolve"
+                                                        }
+                                                    ],
+                                                    "type_arguments": null,
+                                                    "arguments": [],
+                                                    "member": "getParent"
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "type": "IfStatement",
+                                        "label": null,
+                                        "condition": {
+                                            "type": "BinaryOperation",
+                                            "operator": "&&",
+                                            "operandl": {
+                                                "type": "MethodInvocation",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "nestedFile",
+                                                "selectors": [
+                                                    {
+                                                        "type": "MethodInvocation",
+                                                        "prefix_operators": null,
+                                                        "postfix_operators": null,
+                                                        "qualifier": null,
+                                                        "selectors": null,
+                                                        "type_arguments": null,
+                                                        "arguments": [],
+                                                        "member": "exists"
+                                                    }
+                                                ],
+                                                "type_arguments": null,
+                                                "arguments": [],
+                                                "member": "toFile"
+                                            },
+                                            "operandr": {
+                                                "type": "MethodInvocation",
+                                                "prefix_operators": [
+                                                    "!"
+                                                ],
+                                                "postfix_operators": [],
+                                                "qualifier": "texFiles",
+                                                "selectors": [],
+                                                "type_arguments": null,
+                                                "arguments": [
+                                                    {
+                                                        "type": "MemberReference",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "",
+                                                        "selectors": [],
+                                                        "member": "nestedFile"
+                                                    }
+                                                ],
+                                                "member": "contains"
+                                            }
+                                        },
+                                        "then_statement": {
+                                            "type": "BlockStatement",
+                                            "label": null,
+                                            "statements": [
+                                                {
+                                                    "type": "StatementExpression",
+                                                    "label": null,
+                                                    "expression": {
+                                                        "type": "MethodInvocation",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "referencedFiles",
+                                                        "selectors": [],
+                                                        "type_arguments": null,
+                                                        "arguments": [
+                                                            {
+                                                                "type": "MemberReference",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "member": "nestedFile"
+                                                            }
+                                                        ],
+                                                        "member": "add"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "else_statement": null
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": null,
+            "extends": null,
+            "implements": [
+                {
+                    "type": "ReferenceType",
+                    "name": "LatexParser",
+                    "dimensions": [],
+                    "arguments": null,
+                    "sub_type": null
+                }
+            ]
+        }
+    ]
+}

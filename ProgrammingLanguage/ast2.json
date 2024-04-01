@@ -1,0 +1,411 @@
+{
+    "type": "CompilationUnit",
+    "package": null,
+    "imports": [
+        {
+            "type": "Import",
+            "path": "java.sql.Connection",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.sql.SQLException",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.sql.Statement",
+            "static": false,
+            "wildcard": false
+        }
+    ],
+    "types": [
+        {
+            "type": "ClassDeclaration",
+            "modifiers": [
+                "public"
+            ],
+            "annotations": [],
+            "documentation": null,
+            "name": "X",
+            "body": [
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "BasicType",
+                        "name": "boolean",
+                        "dimensions": []
+                    },
+                    "name": "insertPrIssue",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "pr",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "issue",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "projName",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Connection",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "con",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "DBUtil",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "dbcon"
+                                            },
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "user"
+                                            },
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "pswd"
+                                            }
+                                        ],
+                                        "member": "getConnection"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "count",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "Literal",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "value": "0"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "TryStatement",
+                            "label": null,
+                            "resources": null,
+                            "block": [
+                                {
+                                    "type": {
+                                        "type": "ReferenceType",
+                                        "name": "Statement",
+                                        "dimensions": [],
+                                        "arguments": null,
+                                        "sub_type": null
+                                    },
+                                    "modifiers": [],
+                                    "annotations": [],
+                                    "declarators": [
+                                        {
+                                            "type": "VariableDeclarator",
+                                            "name": "comandoSql",
+                                            "dimensions": [],
+                                            "initializer": {
+                                                "type": "MethodInvocation",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "con",
+                                                "selectors": [],
+                                                "type_arguments": null,
+                                                "arguments": [],
+                                                "member": "createStatement"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": {
+                                        "type": "ReferenceType",
+                                        "name": "String",
+                                        "dimensions": [],
+                                        "arguments": null,
+                                        "sub_type": null
+                                    },
+                                    "modifiers": [],
+                                    "annotations": [],
+                                    "declarators": [
+                                        {
+                                            "type": "VariableDeclarator",
+                                            "name": "sql",
+                                            "dimensions": [],
+                                            "initializer": {
+                                                "type": "BinaryOperation",
+                                                "operator": "+",
+                                                "operandl": {
+                                                    "type": "BinaryOperation",
+                                                    "operator": "+",
+                                                    "operandl": {
+                                                        "type": "BinaryOperation",
+                                                        "operator": "+",
+                                                        "operandl": {
+                                                            "type": "BinaryOperation",
+                                                            "operator": "+",
+                                                            "operandl": {
+                                                                "type": "BinaryOperation",
+                                                                "operator": "+",
+                                                                "operandl": {
+                                                                    "type": "BinaryOperation",
+                                                                    "operator": "+",
+                                                                    "operandl": {
+                                                                        "type": "Literal",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": null,
+                                                                        "selectors": [],
+                                                                        "value": "\"INSERT INTO pr_issue VALUES ('\""
+                                                                    },
+                                                                    "operandr": {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "pr"
+                                                                    }
+                                                                },
+                                                                "operandr": {
+                                                                    "type": "Literal",
+                                                                    "prefix_operators": [],
+                                                                    "postfix_operators": [],
+                                                                    "qualifier": null,
+                                                                    "selectors": [],
+                                                                    "value": "\"', '\""
+                                                                }
+                                                            },
+                                                            "operandr": {
+                                                                "type": "MemberReference",
+                                                                "prefix_operators": [],
+                                                                "postfix_operators": [],
+                                                                "qualifier": "",
+                                                                "selectors": [],
+                                                                "member": "issue"
+                                                            }
+                                                        },
+                                                        "operandr": {
+                                                            "type": "Literal",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": null,
+                                                            "selectors": [],
+                                                            "value": "\"', '\""
+                                                        }
+                                                    },
+                                                    "operandr": {
+                                                        "type": "MemberReference",
+                                                        "prefix_operators": [],
+                                                        "postfix_operators": [],
+                                                        "qualifier": "",
+                                                        "selectors": [],
+                                                        "member": "projName"
+                                                    }
+                                                },
+                                                "operandr": {
+                                                    "type": "Literal",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": null,
+                                                    "selectors": [],
+                                                    "value": "\"')\""
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "StatementExpression",
+                                    "label": null,
+                                    "expression": {
+                                        "type": "=",
+                                        "expressionl": {
+                                            "type": "MemberReference",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "",
+                                            "selectors": [],
+                                            "member": "count"
+                                        },
+                                        "value": {
+                                            "type": "MethodInvocation",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "comandoSql",
+                                            "selectors": [],
+                                            "type_arguments": null,
+                                            "arguments": [
+                                                {
+                                                    "type": "MemberReference",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "",
+                                                    "selectors": [],
+                                                    "member": "sql"
+                                                }
+                                            ],
+                                            "member": "executeUpdate"
+                                        }
+                                    }
+                                }
+                            ],
+                            "catches": [
+                                {
+                                    "type": "CatchClause",
+                                    "label": null,
+                                    "parameter": {
+                                        "type": "CatchClauseParameter",
+                                        "modifiers": null,
+                                        "annotations": null,
+                                        "types": [
+                                            "SQLException"
+                                        ],
+                                        "name": "e"
+                                    },
+                                    "block": [
+                                        {
+                                            "type": "StatementExpression",
+                                            "label": null,
+                                            "expression": {
+                                                "type": "MethodInvocation",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "e",
+                                                "selectors": [],
+                                                "type_arguments": null,
+                                                "arguments": [],
+                                                "member": "printStackTrace"
+                                            }
+                                        },
+                                        {
+                                            "type": "ReturnStatement",
+                                            "label": null,
+                                            "expression": {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "false"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "finally_block": null
+                        },
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "BinaryOperation",
+                                "operator": ">",
+                                "operandl": {
+                                    "type": "MemberReference",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": "",
+                                    "selectors": [],
+                                    "member": "count"
+                                },
+                                "operandr": {
+                                    "type": "Literal",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": null,
+                                    "selectors": [],
+                                    "value": "0"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": null,
+            "extends": null,
+            "implements": null
+        }
+    ]
+}

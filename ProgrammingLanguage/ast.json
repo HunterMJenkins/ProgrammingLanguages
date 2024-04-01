@@ -1,0 +1,1182 @@
+{
+    "type": "CompilationUnit",
+    "package": null,
+    "imports": [
+        {
+            "type": "Import",
+            "path": "java.util.ArrayList",
+            "static": false,
+            "wildcard": false
+        },
+        {
+            "type": "Import",
+            "path": "java.util.List",
+            "static": false,
+            "wildcard": false
+        }
+    ],
+    "types": [
+        {
+            "type": "InterfaceDeclaration",
+            "modifiers": [],
+            "annotations": [],
+            "documentation": null,
+            "name": "MathOperation",
+            "body": [
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "BasicType",
+                        "name": "int",
+                        "dimensions": []
+                    },
+                    "name": "operate",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "a",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "b",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": null
+                }
+            ],
+            "type_parameters": null,
+            "extends": null
+        },
+        {
+            "type": "ClassDeclaration",
+            "modifiers": [],
+            "annotations": [],
+            "documentation": null,
+            "name": "Addition",
+            "body": [
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "BasicType",
+                        "name": "int",
+                        "dimensions": []
+                    },
+                    "name": "operate",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "a",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "b",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "BinaryOperation",
+                                "operator": "+",
+                                "operandl": {
+                                    "type": "MemberReference",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": "",
+                                    "selectors": [],
+                                    "member": "a"
+                                },
+                                "operandr": {
+                                    "type": "MemberReference",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": "",
+                                    "selectors": [],
+                                    "member": "b"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": null,
+            "extends": null,
+            "implements": [
+                {
+                    "type": "ReferenceType",
+                    "name": "MathOperation",
+                    "dimensions": [],
+                    "arguments": null,
+                    "sub_type": null
+                }
+            ]
+        },
+        {
+            "type": "ClassDeclaration",
+            "modifiers": [],
+            "annotations": [],
+            "documentation": null,
+            "name": "Subtraction",
+            "body": [
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "BasicType",
+                        "name": "int",
+                        "dimensions": []
+                    },
+                    "name": "operate",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "a",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "b",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "BinaryOperation",
+                                "operator": "-",
+                                "operandl": {
+                                    "type": "MemberReference",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": "",
+                                    "selectors": [],
+                                    "member": "a"
+                                },
+                                "operandr": {
+                                    "type": "MemberReference",
+                                    "prefix_operators": [],
+                                    "postfix_operators": [],
+                                    "qualifier": "",
+                                    "selectors": [],
+                                    "member": "b"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": null,
+            "extends": null,
+            "implements": [
+                {
+                    "type": "ReferenceType",
+                    "name": "MathOperation",
+                    "dimensions": [],
+                    "arguments": null,
+                    "sub_type": null
+                }
+            ]
+        },
+        {
+            "type": "ClassDeclaration",
+            "modifiers": [],
+            "annotations": [],
+            "documentation": null,
+            "name": "Calculator",
+            "body": [
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "BasicType",
+                        "name": "int",
+                        "dimensions": []
+                    },
+                    "name": "executeOperation",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "MathOperation",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "operation",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "a",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": []
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "b",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "operation",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "MemberReference",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "",
+                                        "selectors": [],
+                                        "member": "a"
+                                    },
+                                    {
+                                        "type": "MemberReference",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "",
+                                        "selectors": [],
+                                        "member": "b"
+                                    }
+                                ],
+                                "member": "operate"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": null,
+            "extends": null,
+            "implements": null
+        },
+        {
+            "type": "ClassDeclaration",
+            "modifiers": [],
+            "annotations": [],
+            "documentation": null,
+            "name": "ComplexCalculator",
+            "body": [
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "public"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": {
+                        "type": "ReferenceType",
+                        "name": "List",
+                        "dimensions": [],
+                        "arguments": [
+                            {
+                                "type": {
+                                    "type": "ReferenceType",
+                                    "name": "Integer",
+                                    "dimensions": [],
+                                    "arguments": null,
+                                    "sub_type": null
+                                },
+                                "pattern_type": null
+                            }
+                        ],
+                        "sub_type": null
+                    },
+                    "name": "performSeriesOperations",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": [
+                                    null
+                                ]
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "numbers",
+                            "varargs": false
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "MathOperation",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "operation",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "List",
+                                "dimensions": [],
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Integer",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "pattern_type": null
+                                    }
+                                ],
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "results",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "ArrayList",
+                                            "dimensions": null,
+                                            "arguments": [],
+                                            "sub_type": null
+                                        },
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "constructor_type_arguments": null,
+                                        "arguments": [],
+                                        "body": null
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "ForStatement",
+                            "label": null,
+                            "control": {
+                                "type": "ForControl",
+                                "init": {
+                                    "type": {
+                                        "type": "BasicType",
+                                        "name": "int",
+                                        "dimensions": []
+                                    },
+                                    "modifiers": [],
+                                    "annotations": [],
+                                    "declarators": [
+                                        {
+                                            "type": "VariableDeclarator",
+                                            "name": "i",
+                                            "dimensions": null,
+                                            "initializer": {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "0"
+                                            }
+                                        }
+                                    ]
+                                },
+                                "condition": {
+                                    "type": "BinaryOperation",
+                                    "operator": "<",
+                                    "operandl": {
+                                        "type": "MemberReference",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "",
+                                        "selectors": [],
+                                        "member": "i"
+                                    },
+                                    "operandr": {
+                                        "type": "BinaryOperation",
+                                        "operator": "-",
+                                        "operandl": {
+                                            "type": "MemberReference",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "numbers",
+                                            "selectors": [],
+                                            "member": "length"
+                                        },
+                                        "operandr": {
+                                            "type": "Literal",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": null,
+                                            "selectors": [],
+                                            "value": "1"
+                                        }
+                                    }
+                                },
+                                "update": [
+                                    {
+                                        "type": "MemberReference",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [
+                                            "++"
+                                        ],
+                                        "qualifier": "",
+                                        "selectors": [],
+                                        "member": "i"
+                                    }
+                                ]
+                            },
+                            "body": {
+                                "type": "BlockStatement",
+                                "label": null,
+                                "statements": [
+                                    {
+                                        "type": "StatementExpression",
+                                        "label": null,
+                                        "expression": {
+                                            "type": "MethodInvocation",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "results",
+                                            "selectors": [],
+                                            "type_arguments": null,
+                                            "arguments": [
+                                                {
+                                                    "type": "MethodInvocation",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "operation",
+                                                    "selectors": [],
+                                                    "type_arguments": null,
+                                                    "arguments": [
+                                                        {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [
+                                                                {
+                                                                    "type": "ArraySelector",
+                                                                    "index": {
+                                                                        "type": "MemberReference",
+                                                                        "prefix_operators": [],
+                                                                        "postfix_operators": [],
+                                                                        "qualifier": "",
+                                                                        "selectors": [],
+                                                                        "member": "i"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "member": "numbers"
+                                                        },
+                                                        {
+                                                            "type": "MemberReference",
+                                                            "prefix_operators": [],
+                                                            "postfix_operators": [],
+                                                            "qualifier": "",
+                                                            "selectors": [
+                                                                {
+                                                                    "type": "ArraySelector",
+                                                                    "index": {
+                                                                        "type": "BinaryOperation",
+                                                                        "operator": "+",
+                                                                        "operandl": {
+                                                                            "type": "MemberReference",
+                                                                            "prefix_operators": [],
+                                                                            "postfix_operators": [],
+                                                                            "qualifier": "",
+                                                                            "selectors": [],
+                                                                            "member": "i"
+                                                                        },
+                                                                        "operandr": {
+                                                                            "type": "Literal",
+                                                                            "prefix_operators": [],
+                                                                            "postfix_operators": [],
+                                                                            "qualifier": null,
+                                                                            "selectors": [],
+                                                                            "value": "1"
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "member": "numbers"
+                                                        }
+                                                    ],
+                                                    "member": "operate"
+                                                }
+                                            ],
+                                            "member": "add"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "ReturnStatement",
+                            "label": null,
+                            "expression": {
+                                "type": "MemberReference",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "",
+                                "selectors": [],
+                                "member": "results"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": null,
+            "extends": {
+                "type": "ReferenceType",
+                "name": "Calculator",
+                "dimensions": [],
+                "arguments": null,
+                "sub_type": null
+            },
+            "implements": null
+        },
+        {
+            "type": "ClassDeclaration",
+            "modifiers": [],
+            "annotations": [],
+            "documentation": null,
+            "name": "AdvancedMath",
+            "body": [
+                {
+                    "type": "MethodDeclaration",
+                    "documentation": null,
+                    "modifiers": [
+                        "static",
+                        "public"
+                    ],
+                    "annotations": [],
+                    "type_parameters": null,
+                    "return_type": null,
+                    "name": "main",
+                    "parameters": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "String",
+                                "dimensions": [
+                                    null
+                                ],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "name": "args",
+                            "varargs": false
+                        }
+                    ],
+                    "throws": null,
+                    "body": [
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Calculator",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "simpleCalc",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Calculator",
+                                            "dimensions": null,
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "constructor_type_arguments": null,
+                                        "arguments": [],
+                                        "body": null
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "ComplexCalculator",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "complexCalc",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "ComplexCalculator",
+                                            "dimensions": null,
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "constructor_type_arguments": null,
+                                        "arguments": [],
+                                        "body": null
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Addition",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "addition",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Addition",
+                                            "dimensions": null,
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "constructor_type_arguments": null,
+                                        "arguments": [],
+                                        "body": null
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "Subtraction",
+                                "dimensions": [],
+                                "arguments": null,
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "subtraction",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Subtraction",
+                                            "dimensions": null,
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": null,
+                                        "selectors": [],
+                                        "constructor_type_arguments": null,
+                                        "arguments": [],
+                                        "body": null
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "StatementExpression",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "System.out",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "BinaryOperation",
+                                        "operator": "+",
+                                        "operandl": {
+                                            "type": "Literal",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": null,
+                                            "selectors": [],
+                                            "value": "\"Simple Addition: \""
+                                        },
+                                        "operandr": {
+                                            "type": "MethodInvocation",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "simpleCalc",
+                                            "selectors": [],
+                                            "type_arguments": null,
+                                            "arguments": [
+                                                {
+                                                    "type": "MemberReference",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "",
+                                                    "selectors": [],
+                                                    "member": "addition"
+                                                },
+                                                {
+                                                    "type": "Literal",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": null,
+                                                    "selectors": [],
+                                                    "value": "5"
+                                                },
+                                                {
+                                                    "type": "Literal",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": null,
+                                                    "selectors": [],
+                                                    "value": "3"
+                                                }
+                                            ],
+                                            "member": "executeOperation"
+                                        }
+                                    }
+                                ],
+                                "member": "println"
+                            }
+                        },
+                        {
+                            "type": "StatementExpression",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "System.out",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "BinaryOperation",
+                                        "operator": "+",
+                                        "operandl": {
+                                            "type": "Literal",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": null,
+                                            "selectors": [],
+                                            "value": "\"Simple Subtraction: \""
+                                        },
+                                        "operandr": {
+                                            "type": "MethodInvocation",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "simpleCalc",
+                                            "selectors": [],
+                                            "type_arguments": null,
+                                            "arguments": [
+                                                {
+                                                    "type": "MemberReference",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": "",
+                                                    "selectors": [],
+                                                    "member": "subtraction"
+                                                },
+                                                {
+                                                    "type": "Literal",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": null,
+                                                    "selectors": [],
+                                                    "value": "5"
+                                                },
+                                                {
+                                                    "type": "Literal",
+                                                    "prefix_operators": [],
+                                                    "postfix_operators": [],
+                                                    "qualifier": null,
+                                                    "selectors": [],
+                                                    "value": "3"
+                                                }
+                                            ],
+                                            "member": "executeOperation"
+                                        }
+                                    }
+                                ],
+                                "member": "println"
+                            }
+                        },
+                        {
+                            "type": {
+                                "type": "BasicType",
+                                "name": "int",
+                                "dimensions": [
+                                    null
+                                ]
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "numbers",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "ArrayInitializer",
+                                        "initializers": [
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "1"
+                                            },
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "2"
+                                            },
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "3"
+                                            },
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "4"
+                                            },
+                                            {
+                                                "type": "Literal",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": null,
+                                                "selectors": [],
+                                                "value": "5"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "List",
+                                "dimensions": [],
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Integer",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "pattern_type": null
+                                    }
+                                ],
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "additionResults",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "complexCalc",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "numbers"
+                                            },
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "addition"
+                                            }
+                                        ],
+                                        "member": "performSeriesOperations"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": {
+                                "type": "ReferenceType",
+                                "name": "List",
+                                "dimensions": [],
+                                "arguments": [
+                                    {
+                                        "type": {
+                                            "type": "ReferenceType",
+                                            "name": "Integer",
+                                            "dimensions": [],
+                                            "arguments": null,
+                                            "sub_type": null
+                                        },
+                                        "pattern_type": null
+                                    }
+                                ],
+                                "sub_type": null
+                            },
+                            "modifiers": [],
+                            "annotations": [],
+                            "declarators": [
+                                {
+                                    "type": "VariableDeclarator",
+                                    "name": "subtractionResults",
+                                    "dimensions": [],
+                                    "initializer": {
+                                        "type": "MethodInvocation",
+                                        "prefix_operators": [],
+                                        "postfix_operators": [],
+                                        "qualifier": "complexCalc",
+                                        "selectors": [],
+                                        "type_arguments": null,
+                                        "arguments": [
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "numbers"
+                                            },
+                                            {
+                                                "type": "MemberReference",
+                                                "prefix_operators": [],
+                                                "postfix_operators": [],
+                                                "qualifier": "",
+                                                "selectors": [],
+                                                "member": "subtraction"
+                                            }
+                                        ],
+                                        "member": "performSeriesOperations"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "StatementExpression",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "System.out",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "BinaryOperation",
+                                        "operator": "+",
+                                        "operandl": {
+                                            "type": "Literal",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": null,
+                                            "selectors": [],
+                                            "value": "\"Series Addition: \""
+                                        },
+                                        "operandr": {
+                                            "type": "MemberReference",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "",
+                                            "selectors": [],
+                                            "member": "additionResults"
+                                        }
+                                    }
+                                ],
+                                "member": "println"
+                            }
+                        },
+                        {
+                            "type": "StatementExpression",
+                            "label": null,
+                            "expression": {
+                                "type": "MethodInvocation",
+                                "prefix_operators": [],
+                                "postfix_operators": [],
+                                "qualifier": "System.out",
+                                "selectors": [],
+                                "type_arguments": null,
+                                "arguments": [
+                                    {
+                                        "type": "BinaryOperation",
+                                        "operator": "+",
+                                        "operandl": {
+                                            "type": "Literal",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": null,
+                                            "selectors": [],
+                                            "value": "\"Series Subtraction: \""
+                                        },
+                                        "operandr": {
+                                            "type": "MemberReference",
+                                            "prefix_operators": [],
+                                            "postfix_operators": [],
+                                            "qualifier": "",
+                                            "selectors": [],
+                                            "member": "subtractionResults"
+                                        }
+                                    }
+                                ],
+                                "member": "println"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "type_parameters": null,
+            "extends": null,
+            "implements": null
+        }
+    ]
+}
